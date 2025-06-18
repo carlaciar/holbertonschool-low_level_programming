@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdio.h>
 
-
+BETTY_DOC="betty-doc"
 int main(void)
 {
 	int n;
