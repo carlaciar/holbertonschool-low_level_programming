@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdio.h>
 
-betty-doc
+
 int main(void)
 {
 	int n;
