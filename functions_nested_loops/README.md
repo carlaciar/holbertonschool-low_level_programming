@@ -36,7 +36,7 @@ Write a function that prints 10 times the alphabet, in lowercase, followed by a 
 Write a function that checks for lowercase character.
 - Prototype: int `_islower(int c);`
 - Returns `1` if `c` is lowercase
-- Returns `0` otherwise
+- Returns `0` otherwise\
 FYI: The standard library provides a similar function: `islower`. Run `man islower` to learn more.
 
 ## FILE: 4-isalpha.c
@@ -44,7 +44,7 @@ FYI: The standard library provides a similar function: `islower`. Run `man islow
 Write a function that checks for alphabetic character.
 - Prototype: `int _isalpha(int c);`
 - Returns `1` if `c` is a letter, lowercase or uppercase
-- Returns `0` otherwise
+- Returns `0` otherwise\
 FYI: The standard library provides a similar function: `isalpha`. Run `man isalpha` to learn more.
 
 ## FILE: 5-sign.c
@@ -58,7 +58,7 @@ Write a function that prints the sign of a number.
 ## FILE: 6-abs.c
 **6. There is no such thing as absolute value in this world. You can only estimate what a thing is worth to you**\
 Write a function that computes the absolute value of an integer.
-- Prototype: `int _abs(int);`
+- Prototype: `int _abs(int);`\
 FYI: The standard library provides a similar function: `abs`. Run `man abs` to learn more.
 
 ## FILE: 7-print_last_digit.c
@@ -76,16 +76,16 @@ Write a function that prints every minute of the day of Jack Bauer, starting fro
 **9. Learn your times table**\
 Write a function that prints the 9 times table, starting with 0.
 - Prototype: `void times_table(void);`
-- Example:
-`0,  0,  0,  0,  0,  0,  0,  0,  0,  0$
-0,  1,  2,  3,  4,  5,  6,  7,  8,  9$
-0,  2,  4,  6,  8, 10, 12, 14, 16, 18$
-0,  3,  6,  9, 12, 15, 18, 21, 24, 27$
-0,  4,  8, 12, 16, 20, 24, 28, 32, 36$
-0,  5, 10, 15, 20, 25, 30, 35, 40, 45$
-0,  6, 12, 18, 24, 30, 36, 42, 48, 54$
-0,  7, 14, 21, 28, 35, 42, 49, 56, 63$
-0,  8, 16, 24, 32, 40, 48, 56, 64, 72$
+- Example:\
+`0,  0,  0,  0,  0,  0,  0,  0,  0,  0$\
+0,  1,  2,  3,  4,  5,  6,  7,  8,  9$\
+0,  2,  4,  6,  8, 10, 12, 14, 16, 18$\
+0,  3,  6,  9, 12, 15, 18, 21, 24, 27$\
+0,  4,  8, 12, 16, 20, 24, 28, 32, 36$\
+0,  5, 10, 15, 20, 25, 30, 35, 40, 45$\
+0,  6, 12, 18, 24, 30, 36, 42, 48, 54$\
+0,  7, 14, 21, 28, 35, 42, 49, 56, 63$\
+0,  8, 16, 24, 32, 40, 48, 56, 64, 72$\
 0,  9, 18, 27, 36, 45, 54, 63, 72, 81$`
 
 ## FILE: 10-add.c
