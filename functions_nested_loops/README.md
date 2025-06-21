@@ -36,7 +36,7 @@ Write a function that prints 10 times the alphabet, in lowercase, followed by a 
 Write a function that checks for lowercase character.
 - Prototype: int `_islower(int c);`
 - Returns `1` if `c` is lowercase
-- Returns `0` otherwise\
+- Returns `0` otherwise
 
 
 FYI: The standard library provides a similar function: `islower`. Run `man islower` to learn more.
@@ -46,7 +46,7 @@ FYI: The standard library provides a similar function: `islower`. Run `man islow
 Write a function that checks for alphabetic character.
 - Prototype: `int _isalpha(int c);`
 - Returns `1` if `c` is a letter, lowercase or uppercase
-- Returns `0` otherwise\
+- Returns `0` otherwise
 
 
 FYI: The standard library provides a similar function: `isalpha`. Run `man isalpha` to learn more.
@@ -62,8 +62,7 @@ Write a function that prints the sign of a number.
 ## FILE: 6-abs.c
 **6. There is no such thing as absolute value in this world. You can only estimate what a thing is worth to you**\
 Write a function that computes the absolute value of an integer.
-- Prototype: `int _abs(int);`\
-
+- Prototype: `int _abs(int);`
 
 FYI: The standard library provides a similar function: `abs`. Run `man abs` to learn more.
 
