@@ -3,8 +3,6 @@
 /**
  * print_square - prints a square, followed by a new line
  * @size: the size of the square
- * @i: the amount of times # print
- * @j: columns
  *
  * Return: int value
  */
