@@ -11,6 +11,11 @@ char *cap_string(char *str)
 {
 	int index = 0;
 
+	if (str[0] >= 'a' && str[0] <= 'z')
+	{
+		str[0] = str[0] - 32;
+	}
+
 	while (str[index] != '\0')
 	{
 		if (str[index] == ' ' || str[index] == '\n' || str[index] == ',' ||
