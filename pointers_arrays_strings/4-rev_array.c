@@ -1,6 +1,6 @@
 #include "main.h"
 
-/** 
+/**
  * reverse_array - reverses the content of an array of integers
  * @a: the array
  * @n: the number of elements of the array
@@ -8,26 +8,16 @@
  */
 void reverse_array(int *a, int n)
 {
-	int length = 0;
 	int start = 0;
-	int end;
-	int i = 0;
+	int end = n - 1;
+	int temp;
 
-	while (a[length] != '\0')
+	while (start < end)
 	{
-		length++;
-	}
-
-	end = n - 1;
-
-	while (start < end && i < n)
-	{
-		char temp = a[start];
+		temp = a[start];
 
 		a[start] = a[end];
 		a[end] = temp;
 		start++;
-		end--;
-		i++;
 	}
 }
