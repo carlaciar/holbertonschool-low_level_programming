@@ -22,7 +22,8 @@ char *cap_string(char *str)
 				str[index] == '.' || str[index] == '!' ||
 				str[index] == '?' || str[index] == '"' ||
 				str[index] == '(' || str[index] == ')' ||
-				str[index] == '{' || str[index] == '}')
+				str[index] == '{' || str[index] == '}' ||
+				str[index] == '\t')
 		{
 			if (str[index + 1] >= 'a' && str[index + 1] <= 'z')
 			{
