@@ -13,29 +13,18 @@ char *leet(char *str)
 
 	while (str[index] != '\0')
 	{
-		if (str[index] == 'a' || str[index] == 'A')
+		if (str[index] == 'a' || str[index] == 'A' || str[index] == 'e' ||
+				str[index] == 'E' || str[index] == 'o' ||
+				str[index] == 'O' || str[index] == 't' ||
+				str[index] == 'T' || str[index] == 'l' ||
+				str[index] == 'L')
 		{
-			str[index] = '4';
-		}
-
-		else if (str[index] == 'e' || str[index] == 'E')
-		{
-			str[index] = '3';
-		}
-
-		else if (str[index] == 'o' || str[index] == 'O')
-		{
-			str[index] = '0';
-		}
-
-		else if (str[index] == 't' || str[index] == 'T')
-		{
-			str[index] = '7';
-		}
-
-		else if (str[index] == 'l' || str[index] == 'L')
-		{
-			str[index] = '1';
+			str[index] = (str[index] == 'a' || str[index] == 'A') ? '4' :
+				(str[index] == 'e' || str[index] == 'E') ? '3' :
+				(str[index] == 'o' || str[index] == 'O') ? '0' :
+				(str[index] == 't' || str[index] == 'T') ? '7' :
+				(str[index] == 'l' || str[index] == 'L') ? '1' :
+				str[index];
 		}
 
 		index++;
