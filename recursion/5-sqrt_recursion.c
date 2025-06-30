@@ -10,7 +10,8 @@
  */
 int _sqrt_recursion(int n)
 {
-	int guess = 0;
+	static int guess;
+	int result;
 
 	if (n < 0)
 	{
@@ -20,8 +21,7 @@ int _sqrt_recursion(int n)
 
 	if (guess * guess == n)
 	{
-		int result = guess;
-
+		result = guess;
 		guess = 0;
 		return (result);
 	}
@@ -35,3 +35,5 @@ int _sqrt_recursion(int n)
 	guess++;
 	return (_sqrt_recursion(n));
 }
+
+
