@@ -10,30 +10,3 @@
  */
 int _sqrt_recursion(int n)
 {
-	static int guess;
-	int result;
-
-	if (n < 0)
-	{
-		guess = 0;
-		return (-1);
-	}
-
-	if (guess * guess == n)
-	{
-		result = guess;
-		guess = 0;
-		return (result);
-	}
-
-	if (guess * guess > n)
-	{
-		guess = 0;
-		return (-1);
-	}
-
-	guess++;
-	return (_sqrt_recursion(n));
-}
-
-
