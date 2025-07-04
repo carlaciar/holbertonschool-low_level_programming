@@ -5,7 +5,7 @@
  * @n: the number
  * @i: divided by this number
  *
- * Return: 
+ * Return: 1 if prime, 0 if not
  */
 int divisor(int n, int i)
 {
@@ -14,7 +14,7 @@ int divisor(int n, int i)
 		return (1);
 	}
 
-	if (n % 1 == 0)
+	if (n % i == 0)
 	{
 		return (0);
 	}
