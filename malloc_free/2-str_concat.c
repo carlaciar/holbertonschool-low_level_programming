@@ -13,10 +13,7 @@
 char *str_concat(char *s1, char *s2)
 {
 	char *array;
-	int i = 0;
-	int j = 0;
-	int c;
-	int k;
+	int i = 0, j = 0, c = 0, k = 0;
 
 	if (s1 == NULL)
 	{
@@ -39,13 +36,11 @@ char *str_concat(char *s1, char *s2)
 	{
 		return (NULL);
 	}
-	c = 0;
 	while (c < i)
 	{
 		array[c] = s1[c];
 		c++;
 	}
-	k = 0;
 	while (k < j)
 	{
 		array[c] = s2[k];
