@@ -4,27 +4,28 @@
 #include <unistd.h>
 
 /**
- * print_error - Prints error to stderr and exits
+ * print_error - Prints formatted error to stderr and exits with a code
  * @code: Exit code
- * @message: Format string
- * @arg: File name or fd to insert into message
+ * @msg: Message format
+ * @arg: Argument for format
  */
-void print_error(int code, const char *message, const char *arg)
+void print_error(int code, const char *msg, const char *arg)
 {
-	dprintf(STDERR_FILENO, message, arg);
+	dprintf(STDERR_FILENO, msg, arg);
 	exit(code);
 }
 
 /**
- * main - Copies content from one file to another
+ * main - Copies the content of a file to another file
  * @argc: Argument count
  * @argv: Argument vector
  *
- * Return: 0 on success, exits with error codes otherwise
+ * Return: 0 on success, or exit with error code
  */
 int main(int argc, char *argv[])
 {
-	int fd_from, fd_to, rd, wr;
+	int fd_from, fd_to;
+	ssize_t rd, wr;
 	char buffer[1024];
 
 	if (argc != 3)
@@ -41,21 +42,25 @@ int main(int argc, char *argv[])
 		print_error(99, "Error: Can't write to %s\n", argv[2]);
 	}
 
-	while ((rd = read(fd_from, buffer, 1024)) > 0)
+	while (1)
 	{
+		rd = read(fd_from, buffer, 1024);
+		if (rd == -1)
+		{
+			close(fd_from);
+			close(fd_to);
+			print_error(98, "Error: Can't read from file %s\n", argv[1]);
+		}
+		if (rd == 0)
+			break;
+
 		wr = write(fd_to, buffer, rd);
-		if (wr != rd)
+		if (wr == -1 || wr != rd)
 		{
 			close(fd_from);
 			close(fd_to);
 			print_error(99, "Error: Can't write to %s\n", argv[2]);
 		}
-	}
-	if (rd == -1)
-	{
-		close(fd_from);
-		close(fd_to);
-		print_error(98, "Error: Can't read from file %s\n", argv[1]);
 	}
 
 	if (close(fd_from) == -1)
