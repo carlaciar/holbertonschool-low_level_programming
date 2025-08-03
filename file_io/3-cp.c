@@ -4,10 +4,10 @@
 #include <unistd.h>
 
 /**
- * print_error - Prints an error message to STDERR and exits
+ * print_error - Prints error to stderr and exits
  * @code: Exit code
- * @message: Error message format string
- * @arg: Argument to insert into the message
+ * @message: Format string
+ * @arg: File name or fd to insert into message
  */
 void print_error(int code, const char *message, const char *arg)
 {
@@ -16,11 +16,11 @@ void print_error(int code, const char *message, const char *arg)
 }
 
 /**
- * main - Copies the content of a file to another file
+ * main - Copies content from one file to another
  * @argc: Argument count
  * @argv: Argument vector
  *
- * Return: 0 on success, or exits with the specified error code
+ * Return: 0 on success, exits with error codes otherwise
  */
 int main(int argc, char *argv[])
 {
@@ -68,3 +68,4 @@ int main(int argc, char *argv[])
 
 	return (0);
 }
+
