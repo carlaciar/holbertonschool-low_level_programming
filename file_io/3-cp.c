@@ -4,10 +4,10 @@
 #include <unistd.h>
 
 /**
- * main - Copies content from one file to another.
- * @argc: Argument count.
- * @argv: Argument vector.
- * Return: 0 on success, or exit with specific error code.
+ * main - copies content of one file to another.
+ * @argc: argument count
+ * @argv: argument vector
+ * Return: 0 on success, or exit with specific codes on failure.
  */
 int main(int argc, char *argv[])
 {
@@ -33,14 +33,12 @@ int main(int argc, char *argv[])
 			close(fd_from), close(fd_to),
 			dprintf(2, "Error: Can't write to %s\n", argv[2]), exit(99);
 	}
-
 	if (rd == -1)
 		close(fd_from), close(fd_to),
 		dprintf(2, "Error: Can't read from file %s\n", argv[1]), exit(98);
 
 	if (close(fd_from) == -1)
 		dprintf(2, "Error: Can't close fd %d\n", fd_from), exit(100);
-
 	if (close(fd_to) == -1)
 		dprintf(2, "Error: Can't close fd %d\n", fd_to), exit(100);
 
