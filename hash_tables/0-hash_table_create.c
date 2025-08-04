@@ -5,7 +5,7 @@
 
 /**
  * hash_table_create - function that creates a hash table
- * @head: size of the array
+ * @size: size of the array
  *
  * Return: a pointer to the newly created hash table,
  * or NULL if it failed
