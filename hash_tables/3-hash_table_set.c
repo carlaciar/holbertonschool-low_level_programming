@@ -13,57 +13,42 @@
  */
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
-	unsigned long int index;
 	hash_node_t *node;
-	char *dup_value;
+	char *dup;
 
 	if (ht == NULL || key == NULL || *key == '\0')
 		return (0);
-
-	/* Duplicate the value (empty string if value is NULL) */
-	if (value != NULL)
-		dup_value = strdup(value);
-	else
-		dup_value = strdup("");
-
-	if (dup_value == NULL)
+	dup = strdup(value ? value : "");
+	if (dup == NULL)
 		return (0);
 
-	/* Find the index in the table */
-	index = key_index((const unsigned char *)key, ht->size);
-
-	/* Check if key already exists, update value if so */
-	node = ht->array[index];
+	node = ht->array[key_index((const unsigned char *)key, ht->size)];
 	while (node != NULL)
 	{
 		if (strcmp(node->key, key) == 0)
 		{
 			free(node->value);
-			node->value = dup_value;
+			node->value = dup;
 			return (1);
 		}
 		node = node->next;
 	}
 
-	/* Create a new node if key not found */
-	node = malloc(sizeof(hash_node_t));
+	node = malloc(sizeof(*node));
 	if (node == NULL)
 	{
-		free(dup_value);
+		free(dup);
 		return (0);
 	}
-
 	node->key = strdup(key);
 	if (node->key == NULL)
 	{
-		free(dup_value);
+		free(dup);
 		free(node);
 		return (0);
 	}
-
-	node->value = dup_value;
-	node->next = ht->array[index]; /* Insert at beginning */
-	ht->array[index] = node;
-
+	node->value = dup;
+	node->next = ht->array[key_index((const unsigned char *)key, ht->size)];
+	ht->array[key_index((const unsigned char *)key, ht->size)] = node;
 	return (1);
 }
