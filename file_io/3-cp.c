@@ -7,76 +7,90 @@
  * main - copies the content of a file to another file
  * @argc: argument count
  * @argv: argument vector
- * Return: 0 on success, exits with codes on failure
+ * Return: 0 on success; exits with 97/98/99/100 on errors
  */
 int main(int argc, char *argv[])
 {
-    int fd_from, fd_to;
-    ssize_t rd, wr;
-    char buffer[1024];
+	int fd_from = -1, fd_to = -1;
+	ssize_t rd, wr;
+	char buffer[1024];
 
-    if (argc != 3)
-    {
-        dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-        exit(97);
-    }
+	/* 1) Validate args: print to stderr only */
+	if (argc != 3)
+	{
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		exit(97);
+	}
 
-    fd_from = open(argv[1], O_RDONLY);
-    if (fd_from == -1)
-    {
-        dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-        exit(98);
-    }
+	/* 2) Open source first */
+	fd_from = open(argv[1], O_RDONLY);
+	if (fd_from == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		exit(98);
+	}
 
-    /* Create with 0664; if it already exists, O_TRUNC won't change its perms */
-    fd_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-    if (fd_to == -1)
-    {
-        dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-        close(fd_from);
-        exit(99);
-    }
+	/* 3) Probe a read BEFORE opening dest, to prioritize read errors (exit 98) */
+	rd = read(fd_from, buffer, sizeof(buffer));
+	if (rd == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		close(fd_from);
+		exit(98);
+	}
 
-    /* Read 1024 bytes at a time */
-    while ((rd = read(fd_from, buffer, sizeof(buffer))) > 0)
-    {
-        ssize_t total = 0;
+	/* 4) Now open/create dest (truncate if exists, keep existing perms if already exists) */
+	fd_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (fd_to == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+		close(fd_from);
+		exit(99);
+	}
 
-        /* Write loop to handle partial writes */
-        while (total < rd)
-        {
-            wr = write(fd_to, buffer + total, rd - total);
-            if (wr == -1)
-            {
-                dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-                close(fd_from);
-                close(fd_to);
-                exit(99);
-            }
-            total += wr;
-        }
-    }
+	/* 5) If we already read something, write it (handle partial writes) */
+	while (rd > 0)
+	{
+		ssize_t total = 0;
+		while (total < rd)
+		{
+			wr = write(fd_to, buffer + total, rd - total);
+			if (wr == -1)
+			{
+				dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+				close(fd_from);
+				close(fd_to);
+				exit(99);
+			}
+			total += wr;
+		}
 
-    /* If read fails at any point, exit 98 (this is what the test expects) */
-    if (rd == -1)
-    {
-        dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-        close(fd_from);
-        close(fd_to);
-        exit(98);
-    }
+		/* Read next chunk */
+		rd = read(fd_from, buffer, sizeof(buffer));
+		if (rd == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+			close(fd_from);
+			close(fd_to);
+			exit(98);
+		}
+	}
 
-    if (close(fd_from) == -1)
-    {
-        dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
-        exit(100);
-    }
-    if (close(fd_to) == -1)
-    {
-        dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
-        exit(100);
-    }
+	/* 6) Close fds (report the actual fd value on failure) */
+	if (close(fd_from) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
+		/* fd_to still needs closing attempt to avoid leaks in checker env */
+		if (fd_to != -1)
+			close(fd_to);
+		exit(100);
+	}
+	if (close(fd_to) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
+		exit(100);
+	}
 
-    return (0);
+	return (0);
 }
 
