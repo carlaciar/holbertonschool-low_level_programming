@@ -65,7 +65,6 @@ static void copy_file(char *from, char *to)
 		must_close(fd_from);
 		exit(98);
 	}
-
 	fd_to = open(to, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (fd_to == -1)
 	{
