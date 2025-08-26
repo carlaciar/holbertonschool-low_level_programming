@@ -86,7 +86,6 @@ static void copy_file(char *from, char *to)
 			exit(98);
 		}
 	}
-
 	must_close(fd_from);
 	must_close(fd_to);
 }
@@ -104,7 +103,6 @@ int main(int argc, char **argv)
 		dprintf(2, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
-
 	copy_file(argv[1], argv[2]);
 	return (0);
 }
