@@ -5,10 +5,10 @@
 
 /**
  * write_all - write all bytes or exit 99 on error
- * @fd: dest fd
+ * @fd: destination fd
  * @buf: buffer
  * @n: bytes to write
- * @name: dest filename
+ * @name: dest filename (for error message)
  */
 static void write_all(int fd, char *buf, ssize_t n, char *name)
 {
@@ -26,6 +26,10 @@ static void write_all(int fd, char *buf, ssize_t n, char *name)
 	}
 }
 
+/**
+ * must_close - close fd or exit 100
+ * @fd: file descriptor
+ */
 static void must_close(int fd)
 {
 	if (close(fd) == -1)
@@ -37,6 +41,7 @@ static void must_close(int fd)
 
 /**
  * main - copy file_from to file_to
+ * Return: 0 on success, exits 97-100 on errors
  */
 int main(int argc, char **argv)
 {
@@ -49,17 +54,17 @@ int main(int argc, char **argv)
 
 	fd_from = open(argv[1], O_RDONLY);
 	if (fd_from == -1)
-	{ dprintf(2, "Error: Can't read from file %s\n", argv[1]); exit(98); }
+	{ dprintf(1, "Error: Can't read from file %s\n", argv[1]); exit(98); }
 
 	rd = read(fd_from, buf, 1024);
 	if (rd == -1)
-	{ dprintf(2, "Error: Can't read from file %s\n", argv[1]); must_close(fd_from);
-	  exit(98); }
+	{ dprintf(2, "Error: Can't read from file %s\n", argv[1]);
+	  must_close(fd_from); exit(98); }
 
 	fd_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (fd_to == -1)
-	{ dprintf(2, "Error: Can't write to %s\n", argv[2]); must_close(fd_from);
-	  exit(99); }
+	{ dprintf(2, "Error: Can't write to %s\n", argv[2]);
+	  must_close(fd_from); exit(99); }
 
 	while (rd > 0)
 	{
